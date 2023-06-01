@@ -1,4 +1,6 @@
 
+MqttPluginInstaller_UE5.1_*.exe
+
 # VS files
 .vs
 *.sln
