@@ -4,6 +4,9 @@ MqttPluginInstaller_UE5.1_*.exe
 # VS files
 .vs
 *.sln
+.vsconfig
+
+MqttPluginInstaller_*.exe
 
 # Precompiled Assets
 SourceArt/**/*.png
