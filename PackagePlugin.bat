@@ -17,13 +17,13 @@ if "%day:~0,1%" == " " set day=0%day:~1,1%
 set BuildTime=%year%%month%%day%-%hour%%min%
 
 
-FOR /F "tokens=2* skip=2" %%a in ('reg query "HKLM\Software\EpicGames\Unreal Engine\5.2" /v "InstalledDirectory"') do set UE_52_DIR=%%b
+FOR /F "tokens=2* skip=2" %%a in ('reg query "HKLM\Software\EpicGames\Unreal Engine\5.3" /v "InstalledDirectory"') do set UE_53_DIR=%%b
 
 
 
-IF "%UE_52_DIR%"=="" (
-    ECHO [91mERROR: UE_52_DIR environment variable not set!! [0m
-    ECHO Install Unreal 5.2 via EpicGame launcher!
+IF "%UE_53_DIR%"=="" (
+    ECHO [91mERROR: UE_53_DIR environment variable not set!! [0m
+    ECHO Install Unreal 5.3 via EpicGame launcher!
     pause
     exit 1
 )
@@ -42,9 +42,9 @@ IF %ERRORLEVEL% NEQ 0 (
 SET CURRENTDIR="%cd%"
 
 
-call "%UE_52_DIR%/Engine/Build/BatchFiles/RunUAT.bat" BuildPlugin ^
+call "%UE_53_DIR%/Engine/Build/BatchFiles/RunUAT.bat" BuildPlugin ^
                 -plugin=%CURRENTDIR%\Plugins\MqttUtilities\MqttUtilities.uplugin ^
-                -Package=%CURRENTDIR%\MqttPlugin_5.2 ^
+                -Package=%CURRENTDIR%\MqttPlugin_5.3 ^
 				-TargetPlatforms=Win64
 IF %ERRORLEVEL% NEQ 0 (
     ECHO [91mERROR: Building Plugin failed! [0m
@@ -52,10 +52,9 @@ IF %ERRORLEVEL% NEQ 0 (
     exit 1
 )
 
-copy Plugins\MqttUtilities\Source\ThirdParty\Win64\mosquitto\libraries\mosquitto.dll  MqttPlugin_5.2\Binaries\Win64
-copy Plugins\MqttUtilities\Source\ThirdParty\Win64\mosquittopp\libraries\mosquittopp.dll  MqttPlugin_5.2\Binaries\Win64
+copy Plugins\MqttUtilities\Source\ThirdParty\Win64\mosquitto\libraries\mosquitto.dll  MqttPlugin_5.3\Binaries\Win64
+copy Plugins\MqttUtilities\Source\ThirdParty\Win64\mosquittopp\libraries\mosquittopp.dll  MqttPlugin_5.3\Binaries\Win64
 
-pause 
 
 makensis.exe -V4 PluginInstaller.nsi
 IF %ERRORLEVEL% NEQ 0 (
@@ -65,6 +64,6 @@ IF %ERRORLEVEL% NEQ 0 (
 )
 
 rem Remove build dir and rename with build time
-rmdir /S / Q MqttPlugin_5.2
+rmdir /S / Q MqttPlugin_5.3
 timeout 3 > NUL
-ren MqttPluginInstaller_UE5.2.exe MqttPluginInstaller_UE5.2_%BuildTime%.exe
+ren MqttPluginInstaller_UE5.3.exe MqttPluginInstaller_UE5.3_%BuildTime%.exe
