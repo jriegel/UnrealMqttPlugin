@@ -6,7 +6,6 @@
   "Description": "MQTT client for Unreal Engine",
   "Category": "Code Plugins",
   "CreatedBy": "Jürgen Riegel",
-  "EngineVersion": "5.1.0",
   "SupportURL": "mailto:support@ninevastudios.com",
   "EnabledByDefault": true,
   "CanContainContent": true,
