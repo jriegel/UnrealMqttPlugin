@@ -37,6 +37,9 @@ void FMqttUtilitiesModule::StartupModule()
 	mDllHandleMosquitto = FPlatformProcess::GetDllHandle(*(DLLPath + "mosquitto.dll"));
 	mDllHandleMosquittopp = FPlatformProcess::GetDllHandle(*(DLLPath + "mosquittopp.dll"));
 
+	if (!mDllHandleMosquitto)
+		UE_LOG(LogMQTT, Error, TEXT("Could not load mosquitto.dll -> BeginPlay() will fail! "));
+
 	FPlatformProcess::PopDllDirectory(*DLLPath);
 
 #endif
