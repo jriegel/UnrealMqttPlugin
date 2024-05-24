@@ -7,7 +7,7 @@
   "Category": "Code Plugins",
   "CreatedBy": "Jürgen Riegel",
   "SupportURL": "mailto:support@ninevastudios.com",
-  "EnabledByDefault": true,
+  "EnabledByDefault": false,
   "CanContainContent": true,
   "IsBetaVersion": false,
   "Installed": true,

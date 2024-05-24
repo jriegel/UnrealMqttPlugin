@@ -181,35 +181,35 @@ void FMqttRunnable::OnDisconnect()
 
 void FMqttRunnable::OnPublished(int mid)
 {
-	AsyncTask(ENamedThreads::GameThread, [this,mid]() {
+	AsyncTask(ENamedThreads::GameThread, [this, mid]() {
 		client->OnPublishDelegate.ExecuteIfBound(mid);
 	});
 }
 
 void FMqttRunnable::OnMessage(FMqttMessage message)
 {
-	AsyncTask(ENamedThreads::GameThread, [this, &message]() {
+	AsyncTask(ENamedThreads::GameThread, [this, message]() {
 		client->OnMessageDelegate.ExecuteIfBound(message);
 	});
 }
 
 void FMqttRunnable::OnSubscribe(int mid, const TArray<int> qos)
 {
-	AsyncTask(ENamedThreads::GameThread, [this, &mid, &qos]() {
+	AsyncTask(ENamedThreads::GameThread, [this, mid, qos]() {
 		client->OnSubscribeDelegate.ExecuteIfBound(mid, qos);
-	});
+		});
 }
 
 void FMqttRunnable::OnUnsubscribe(int mid)
 {
-	AsyncTask(ENamedThreads::GameThread, [this, &mid]() {
+	AsyncTask(ENamedThreads::GameThread, [this, mid]() {
 		client->OnUnsubscribeDelegate.ExecuteIfBound(mid);
-	});
+		});
 }
 
 void FMqttRunnable::OnError(int errCode, FString message)
 {
-	AsyncTask(ENamedThreads::GameThread, [this, &errCode, &message]() {
+	AsyncTask(ENamedThreads::GameThread, [this, errCode, message]() {
 		client->OnErrorDelegate.ExecuteIfBound(errCode, message);
-	});
+		});
 }

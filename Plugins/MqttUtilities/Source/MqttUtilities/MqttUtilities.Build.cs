@@ -3,6 +3,11 @@
 using System.IO;
 using UnrealBuildTool;
 
+#if UE_5_0_OR_LATER
+using EpicGames.Core;
+#else
+using Tools.DotNETCommon;
+#endif
 
 public class MqttUtilities : ModuleRules
 {
@@ -61,11 +66,6 @@ public class MqttUtilities : ModuleRules
 
             LoadThirdPartyLibrary("mosquitto", Target);
             LoadThirdPartyLibrary("mosquittopp", Target);
-			
-			// Ensure that the DLL is staged along with the executable
-			//RuntimeDependencies.Add(Path.Combine(Path.Combine(ModuleDirectory, "..", ".." ,"Binaries", "Win64", "mosquitto.dll")));
-			//RuntimeDependencies.Add(Path.Combine(Path.Combine(ModuleDirectory, "..", "..","Binaries", "Win64", "mosquittopp.dll")));
-
         }
 
         // Additional routine for Mac

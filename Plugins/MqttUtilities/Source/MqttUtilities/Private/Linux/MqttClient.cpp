@@ -6,7 +6,6 @@
 #include "Utils/StringUtils.h"
 #include "GenericPlatform/GenericPlatformAffinity.h"
 #include "HAL/RunnableThread.h"
-#include "IMqttUtilitiesModule.h"
 
 void UMqttClient::BeginDestroy()
 {
@@ -24,13 +23,13 @@ void UMqttClient::Connect(FMqttConnectionData connectionData, const FOnConnectDe
 	
 	if (Task != nullptr && Task->IsAlive())
 	{
-		UE_LOG(LogMQTT, Warning, TEXT("MQTT task is already running. Disconnect and try again"));
+		UE_LOG(LogTemp, Warning, TEXT("MQTT => MQTT task is already running. Disconnect and try again"));
 		return;
 	}
 
 	if (ClientConfig.ClientId.IsEmpty())
 	{
-		UE_LOG(LogMQTT, Warning, TEXT("Client ID is not set. Connection cancelled."));
+		UE_LOG(LogTemp, Warning, TEXT("MQTT => Client ID is not set. Connection cancelled."));
 		return;
 	}
 	
@@ -68,7 +67,7 @@ void UMqttClient::Subscribe(FString topic, int qos)
 {
 	if(Task == nullptr || !Task->IsAlive())
 	{
-		UE_LOG(LogMQTT, Warning, TEXT("There is no running MQTT task"));
+		UE_LOG(LogTemp, Warning, TEXT("MQTT => There is no running MQTT task"));
 		return;
 	}
 
@@ -86,7 +85,7 @@ void UMqttClient::Unsubscribe(FString topic)
 {
 	if(Task == nullptr || !Task->IsAlive())
 	{
-		UE_LOG(LogMQTT, Warning, TEXT("There is no running MQTT task"));
+		UE_LOG(LogTemp, Warning, TEXT("MQTT => There is no running MQTT task"));
 		return;
 	}
 
@@ -103,7 +102,7 @@ void UMqttClient::Publish(FMqttMessage message)
 {
 	if(Task == nullptr || !Task->IsAlive())
 	{
-		UE_LOG(LogMQTT, Warning, TEXT("There is no running MQTT task"));
+		UE_LOG(LogTemp, Warning, TEXT("MQTT => There is no running MQTT task"));
 		return;
 	}
 

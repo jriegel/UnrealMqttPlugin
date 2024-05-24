@@ -4,7 +4,6 @@
 
 #include "MqttClient.h"
 #include "MqttClientImpl.h"
-#include "IMqttUtilitiesModule.h"
 
 #include "Async/Async.h"
 
@@ -61,7 +60,7 @@ uint32 FMqttRunnable::Run()
 
 	if (returnCode != 0) 
 	{
-		UE_LOG(LogMQTT, Error, TEXT("Connection error: %s"), ANSI_TO_TCHAR(mosquitto_strerror(returnCode)));
+		UE_LOG(LogTemp, Error, TEXT("MQTT => Connection error: %s"), ANSI_TO_TCHAR(mosquitto_strerror(returnCode)));
 		OnError(returnCode, FString(ANSI_TO_TCHAR(mosquitto_strerror(returnCode))));
 		bKeepRunning = false;
 	}
@@ -101,7 +100,7 @@ uint32 FMqttRunnable::Run()
 
 			if (returnCode != 0)
 			{
-				UE_LOG(LogMQTT, Error, TEXT("Output error: %s"), ANSI_TO_TCHAR(mosquitto_strerror(returnCode)));
+				UE_LOG(LogTemp, Error, TEXT("MQTT => Output error: %s"), ANSI_TO_TCHAR(mosquitto_strerror(returnCode)));
 				OnError(returnCode, FString(ANSI_TO_TCHAR(mosquitto_strerror(returnCode))));
 			}
 		}
@@ -112,7 +111,7 @@ uint32 FMqttRunnable::Run()
 
 		if (returnCode != 0)
 		{
-			UE_LOG(LogMQTT, Error, TEXT("Connection error: %s"), ANSI_TO_TCHAR(mosquitto_strerror(returnCode)));
+			UE_LOG(LogTemp, Error, TEXT("MQTT => Connection error: %s"), ANSI_TO_TCHAR(mosquitto_strerror(returnCode)));
 
 			if(returnCode == MOSQ_ERR_CONN_REFUSED)
 			{
@@ -130,7 +129,7 @@ uint32 FMqttRunnable::Run()
 	
 	if (returnCode != 0) 
 	{
-		UE_LOG(LogMQTT, Error, TEXT("%s"), ANSI_TO_TCHAR(mosquitto_strerror(returnCode)));
+		UE_LOG(LogTemp, Error, TEXT("MQTT => %s"), ANSI_TO_TCHAR(mosquitto_strerror(returnCode)));
 	}
 
 	delete TaskQueue;

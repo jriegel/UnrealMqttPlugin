@@ -2,9 +2,8 @@
 
 #include "MqttClientImpl.h"
 #include "MqttRunnable.h"
-#include "IMqttUtilitiesModule.h"
 
-MqttClientImpl::MqttClientImpl(const char * id) : mosqpp::mosquittopp(id)
+MqttClientImpl::MqttClientImpl(const char* id) : mosqpp::mosquittopp(id)
 {
 }
 
@@ -19,7 +18,7 @@ void MqttClientImpl::on_connect(int rc)
 		return;
 	}
 
-	UE_LOG(LogMQTT, Log, TEXT("Impl: Connected"));
+	UE_LOG(LogTemp, Warning, TEXT("MQTT => Impl: Connected"));
 
 	Task->OnConnect();
 }
@@ -31,21 +30,21 @@ void MqttClientImpl::on_disconnect(int rc)
 		return;
 	}
 
-	UE_LOG(LogMQTT, Warning, TEXT("Impl: Disconnected"));
+	UE_LOG(LogTemp, Warning, TEXT("MQTT => Impl: Disconnected"));
 
 	Task->OnDisconnect();
 }
 
 void MqttClientImpl::on_publish(int mid)
 {
-	//UE_LOG(LogMQTT, Log, TEXT("Impl: Message published"));
+	UE_LOG(LogTemp, Warning, TEXT("MQTT => Impl: Message published"));
 
 	Task->OnPublished(mid);
 }
 
-void MqttClientImpl::on_message(const mosquitto_message * src)
+void MqttClientImpl::on_message(const mosquitto_message* src)
 {
-	//UE_LOG(LogMQTT, Log, TEXT("Impl: Message received"));
+	UE_LOG(LogTemp, Warning, TEXT("MQTT => Impl: Message received"));
 
 	FMqttMessage msg;
 
@@ -66,12 +65,22 @@ void MqttClientImpl::on_message(const mosquitto_message * src)
 
 	free(buffer);
 
+	// Create a buffer to hold the payload without converting to FString
+	TArray<uint8> Buffer;
+	// Allocate memory for the buffer to hold the payload
+	Buffer.SetNumZeroed(PayloadLength);
+	if (PayloadLength > 0) {
+		// Copy the payload to the buffer
+		FMemory::Memcpy(Buffer.GetData(), src->payload, PayloadLength);
+	}
+	msg.MessageBuffer = Buffer;
+
 	Task->OnMessage(msg);
 }
 
-void MqttClientImpl::on_subscribe(int mid, int qos_count, const int * granted_qos)
+void MqttClientImpl::on_subscribe(int mid, int qos_count, const int* granted_qos)
 {
-	UE_LOG(LogMQTT, Log, TEXT("Impl: Subscribed"));
+	UE_LOG(LogTemp, Warning, TEXT("MQTT => Impl: Subscribed"));
 
 	TArray<int> qos;
 
@@ -85,7 +94,7 @@ void MqttClientImpl::on_subscribe(int mid, int qos_count, const int * granted_qo
 
 void MqttClientImpl::on_unsubscribe(int mid)
 {
-	UE_LOG(LogMQTT, Log, TEXT("Impl: Unsubscribed"));
+	UE_LOG(LogTemp, Warning, TEXT("MQTT => Impl: Unsubscribed"));
 
 	Task->OnUnsubscribe(mid);
 }

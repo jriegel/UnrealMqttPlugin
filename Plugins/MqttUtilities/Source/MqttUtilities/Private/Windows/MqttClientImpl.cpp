@@ -38,7 +38,7 @@ void MqttClientImpl::on_disconnect(int rc)
 
 void MqttClientImpl::on_publish(int mid)
 {
-	UE_LOG(LogMQTT, Log, TEXT("Impl: Mesage published"));
+	//UE_LOG(LogMQTT, Log, TEXT("Impl: Mesage published"));
 
 	Task->OnPublished(mid);
 }
