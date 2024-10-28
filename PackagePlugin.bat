@@ -54,6 +54,8 @@ IF %ERRORLEVEL% NEQ 0 (
 
 copy Plugins\MqttUtilities\Source\ThirdParty\Win64\mosquitto\libraries\mosquitto.dll  MqttPlugin_5.3\Binaries\Win64
 copy Plugins\MqttUtilities\Source\ThirdParty\Win64\mosquittopp\libraries\mosquittopp.dll  MqttPlugin_5.3\Binaries\Win64
+copy Plugins\MqttUtilities\Source\ThirdParty\Win64\mosquitto\libraries\libcrypto-1_1-x64.dll  MqttPlugin_5.3\Binaries\Win64
+copy Plugins\MqttUtilities\Source\ThirdParty\Win64\mosquitto\libraries\libssl-1_1-x64.dll  MqttPlugin_5.3\Binaries\Win64
 
 
 makensis.exe -V4 PluginInstaller.nsi

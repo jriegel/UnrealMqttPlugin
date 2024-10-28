@@ -25,6 +25,10 @@
 		{
 			"Name": "MDL",
 			"Enabled": false
+		},
+		{
+			"Name": "MqttUtilities",
+			"Enabled": true
 		}
 	]
 }
