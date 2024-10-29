@@ -66,6 +66,16 @@ public class MqttUtilities : ModuleRules
 
             LoadThirdPartyLibrary("mosquitto", Target);
             LoadThirdPartyLibrary("mosquittopp", Target);
+
+            if (!File.Exists(Path.Combine(ModuleDirectory, "../../Binaries/Win64/libcrypto-3-x64.dll")))
+                File.Copy(Path.Combine(ModuleDirectory, "../ThirdParty/Win64/mosquitto/libraries/libcrypto-3-x64.dll"), Path.Combine(ModuleDirectory, "../../Binaries/Win64/libcrypto-3-x64.dll") );
+            if (!File.Exists(Path.Combine(ModuleDirectory, "../../Binaries/Win64/libssl-3-x64.dll")))
+                File.Copy(Path.Combine(ModuleDirectory, "../ThirdParty/Win64/mosquitto/libraries/libssl-3-x64.dll"), Path.Combine(ModuleDirectory, "../../Binaries/Win64/libssl-3-x64.dll"));
+            if (!File.Exists(Path.Combine(ModuleDirectory, "../../Binaries/Win64/pthreadVC3.dll")))
+                File.Copy(Path.Combine(ModuleDirectory, "../ThirdParty/Win64/mosquitto/libraries/pthreadVC3.dll"), Path.Combine(ModuleDirectory, "../../Binaries/Win64/pthreadVC3.dll"));
+            RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "../../Binaries/Win64/libcrypto-3-x64.dll"));
+            RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "../../Binaries/Win64/libssl-3-x64.dll"));
+            RuntimeDependencies.Add(Path.Combine(ModuleDirectory, "../../Binaries/Win64/pthreadVC3.dll"));
         }
 
         // Additional routine for Mac
@@ -124,7 +134,7 @@ public class MqttUtilities : ModuleRules
         }
   	}
 
-    public void LoadThirdPartyLibrary(string libname, ReadOnlyTargetRules Target)
+    public void LoadThirdPartyLibrary(string libname, ReadOnlyTargetRules Target, bool isDynLoad = true)
     {
         string StaticLibExtension = ".lib";
         string DynamicLibExtension = string.Empty;
